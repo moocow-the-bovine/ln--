@@ -83,11 +83,12 @@ cmdline_parser_print_help (void)
   printf("  In the 1st form, create a link to TARGET with the name LINK_NAME.\n");
   printf("  In the 2nd form, create a link to TARGET in the current directory.\n");
   printf("  In the 3rd and 4th forms, create links to each TARGET in DIRECTORY.\n");
-  printf("  Create hard links by default, symbolic links with --symbolic.\n");
-  printf("  By default, each destination (name of new link) should not already exist.\n");
-  printf("  When creating hard links, each TARGET must exist.  Symbolic links\n");
-  printf("  can hold arbitrary text; if later resolved, a relative link is\n");
-  printf("  interpreted in relation to its parent directory.\n");
+  printf("  By default, creates hard links if pssible and symbolic links if\n");
+  printf("  hard link creation fails. By default, each destination (name of new\n");
+  printf("  link) should not already exist. When creating hard links, each\n");
+  printf("  TARGET must exist.  Symbolic links can hold arbitrary text; if\n");
+  printf("  later resolved, a relative link is interpreted in relation to its\n");
+  printf("  parent directory.\n");
   printf("\n");
   
   printf("Usage: %s [OPTIONS]... TARGET... LINK_NAME_OR_DIRECTORY\n", "ln--");

@@ -10,6 +10,8 @@ CFLAGS ?= -Wall -DHAVE_CONFIG_H -O2
 LDFLAGS ?= $(CFLAGS)
 LIBS ?=
 
+INSTDIR ?= /usr/local/bin
+
 CLEAN_FILES ?= ln-- *.o
 
 ##======================================================================
@@ -31,7 +33,14 @@ ln--: ln--.o cmdline.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 ##======================================================================
-## Rules: Cleanup
+## Rules: install
+
+.PHONY: install
+install: ln--
+	install --mode=755 ln-- $(INSTDIR)
+
+##======================================================================
+## Rules: cleanup
 
 .PHONY: clean realclean
 clean:
