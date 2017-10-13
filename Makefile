@@ -20,9 +20,11 @@ all: ln--
 
 ##--------------------------------------------------------------
 ## Rules: gog
+ifneq ($(shell which optgen.perl),)
 cmdline.c cmdline.h: cmdline.gog
 	optgen.perl -u -l --nopod --no-handle-rcfile -F cmdline $<
-CLEAN_FILES += cmdline.c cmdline.h
+REALCLEAN_FILES += cmdline.c cmdline.h
+endif
 
 ln--.o: cmdline.c cmdline.h
 cmdline.o: cmdline.c cmdline.h
