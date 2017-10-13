@@ -26,6 +26,8 @@ cmdline.c cmdline.h: cmdline.gog
 REALCLEAN_FILES += cmdline.c cmdline.h
 endif
 
+##--------------------------------------------------------------
+## Rules: compile
 ln--.o: cmdline.c cmdline.h
 cmdline.o: cmdline.c cmdline.h
 %.o: %.c config.h
@@ -33,6 +35,12 @@ cmdline.o: cmdline.c cmdline.h
 
 ln--: ln--.o cmdline.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
+
+##======================================================================
+## Rules: test (dummy)
+
+test: ln--
+	./ln-- --version
 
 ##======================================================================
 ## Rules: install
