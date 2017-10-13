@@ -32,18 +32,24 @@ const char *prog;
 //======================================================================
 // Functions
 
+int is_symlink(const char *path)
+{
+  struct stat path_lstat;
+  lstat(path, &path_lstat);
+  return S_ISLNK(path_lstat.st_mode);
+}
+
 int is_directory(const char *path)
 {
   struct stat path_stat;
-  stat(path, &path_stat);
-  return S_ISDIR(path_stat.st_mode);
-}
 
-int is_symlink(const char *path)
-{
-  struct stat path_stat;
-  lstat(path, &path_stat);
-  return S_ISLNK(path_stat.st_mode);
+  if (args.no_target_directory_flag)
+    return 0;
+  else if (args.no_dereference_flag && is_symlink(path))
+    return 0;
+
+  stat(path,&path_stat);
+  return S_ISDIR(path_stat.st_mode);
 }
 
 
@@ -144,7 +150,7 @@ int main(int argc, const char **argv)
     //-- ln [OPTION]... TARGET... DIRECTORY     (4th form)
     link_generic_multi(args.inputs_num, (const char **)args.inputs, args.target_directory_arg);
   }
-  else if (args.inputs_num > 1 && !args.no_target_directory_flag && is_directory(args.inputs[args.inputs_num-1])) {
+  else if (args.inputs_num > 1 && is_directory(args.inputs[args.inputs_num-1])) {
     //-- ln [OPTION]... TARGET... DIRECTORY     (3rd form)
     link_generic_multi(args.inputs_num-1, (const char **)args.inputs, args.inputs[args.inputs_num-1]);
   }
@@ -157,6 +163,7 @@ int main(int argc, const char **argv)
     link_generic(args.inputs[0], args.inputs[1]);
   }
   else if (args.inputs_num > 2 && !is_directory(args.inputs[args.inputs_num-1])) {
+    //-- more than 2 args, but last one ain't a directory
     fprintf(stderr, "%s: target `%s' is not a directory\n", prog, args.inputs[args.inputs_num-1]);
     exit(2);
   }

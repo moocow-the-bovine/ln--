@@ -40,7 +40,7 @@
 
 
 #ifndef PROGRAM
-# define PROGRAM "ln++"
+# define PROGRAM "ln--"
 #endif
 
 /* #define cmdline_parser_DEBUG */
@@ -63,7 +63,7 @@
 void
 cmdline_parser_print_version (void)
 {
-  printf("ln++ (%s %s) by Bryan Jurish <moocow@cpan.org>\n", PACKAGE, VERSION);
+  printf("ln-- (%s %s) by Bryan Jurish <moocow@cpan.org>\n", PACKAGE, VERSION);
 }
 
 void
@@ -74,10 +74,11 @@ cmdline_parser_print_help (void)
   printf("Purpose:\n");
   printf("  Quick and dirty `smart' link creation simulating ln(1).\n");
   printf("  \n");
-  printf("    ln++ [OPTION]... [-T] TARGET LINK_NAME   (1st form)\n");
-  printf("    ln++ [OPTION]... TARGET                  (2nd form)\n");
-  printf("    ln++ [OPTION]... TARGET... DIRECTORY     (3rd form)\n");
-  printf("    ln++ [OPTION]... -t DIRECTORY TARGET...  (4th form)\n");
+  printf("  Synopsis:\n");
+  printf("    ln-- [OPTION]... [-T] TARGET LINK_NAME   (1st form)\n");
+  printf("    ln-- [OPTION]... TARGET                  (2nd form)\n");
+  printf("    ln-- [OPTION]... TARGET... DIRECTORY     (3rd form)\n");
+  printf("    ln-- [OPTION]... -t DIRECTORY TARGET...  (4th form)\n");
   printf("  \n");
   printf("  In the 1st form, create a link to TARGET with the name LINK_NAME.\n");
   printf("  In the 2nd form, create a link to TARGET in the current directory.\n");
@@ -89,7 +90,7 @@ cmdline_parser_print_help (void)
   printf("  interpreted in relation to its parent directory.\n");
   printf("\n");
   
-  printf("Usage: %s [OPTIONS]... TARGET... LINK_NAME_OR_DIRECTORY\n", "ln++");
+  printf("Usage: %s [OPTIONS]... TARGET... LINK_NAME_OR_DIRECTORY\n", "ln--");
   
   printf("\n");
   printf(" Arguments:\n");
@@ -109,6 +110,7 @@ cmdline_parser_print_help (void)
   printf("\n");
   printf(" ln(1) Simulation Options:\n");
   printf("   -f     --force                 remove existing destination files\n");
+  printf("   -n     --no-dereference        treat LINK_NAME as a normal file if it is a symbolic link to a directory\n");
   printf("   -tDIR  --target-directory=DIR  specify the DIRECTORY in which to create the links\n");
   printf("   -T     --no-target-directory   treat LINK_NAME as a normal file always\n");
 }
@@ -138,6 +140,7 @@ clear_args(struct gengetopt_args_info *args_info)
   args_info->hard_flag = 0; 
   args_info->symbolic_flag = 0; 
   args_info->force_flag = 0; 
+  args_info->no_dereference_flag = 0; 
   args_info->target_directory_arg = NULL; 
   args_info->no_target_directory_flag = 0; 
 }
@@ -156,6 +159,7 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
   args_info->hard_given = 0;
   args_info->symbolic_given = 0;
   args_info->force_given = 0;
+  args_info->no_dereference_given = 0;
   args_info->target_directory_given = 0;
   args_info->no_target_directory_given = 0;
 
@@ -181,6 +185,7 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
 	{ "hard", 0, NULL, 'H' },
 	{ "symbolic", 0, NULL, 's' },
 	{ "force", 0, NULL, 'f' },
+	{ "no-dereference", 0, NULL, 'n' },
 	{ "target-directory", 1, NULL, 't' },
 	{ "no-target-directory", 0, NULL, 'T' },
         { NULL,	0, NULL, 0 }
@@ -193,6 +198,7 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
 	'H',
 	's',
 	'f',
+	'n',
 	't', ':',
 	'T',
 	'\0'
@@ -309,6 +315,15 @@ cmdline_parser_parse_option(char oshort, const char *olong, const char *val,
            args_info->force_flag = !(args_info->force_flag);
           break;
         
+        case 'n':	 /* treat LINK_NAME as a normal file if it is a symbolic link to a directory */
+          if (args_info->no_dereference_given) {
+            fprintf(stderr, "%s: `--no-dereference' (`-n') option given more than once\n", PROGRAM);
+          }
+          args_info->no_dereference_given++;
+         if (args_info->no_dereference_given <= 1)
+           args_info->no_dereference_flag = !(args_info->no_dereference_flag);
+          break;
+        
         case 't':	 /* specify the DIRECTORY in which to create the links */
           if (args_info->target_directory_given) {
             fprintf(stderr, "%s: `--target-directory' (`-t') option given more than once\n", PROGRAM);
@@ -404,6 +419,16 @@ cmdline_parser_parse_option(char oshort, const char *olong, const char *val,
             args_info->force_given++;
            if (args_info->force_given <= 1)
              args_info->force_flag = !(args_info->force_flag);
+          }
+          
+          /* treat LINK_NAME as a normal file if it is a symbolic link to a directory */
+          else if (strcmp(olong, "no-dereference") == 0) {
+            if (args_info->no_dereference_given) {
+              fprintf(stderr, "%s: `--no-dereference' (`-n') option given more than once\n", PROGRAM);
+            }
+            args_info->no_dereference_given++;
+           if (args_info->no_dereference_given <= 1)
+             args_info->no_dereference_flag = !(args_info->no_dereference_flag);
           }
           
           /* specify the DIRECTORY in which to create the links */

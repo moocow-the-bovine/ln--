@@ -24,6 +24,7 @@ struct gengetopt_args_info {
   int hard_flag;	 /* create only hardlinks (default=0). */
   int symbolic_flag;	 /* create only symlinks (default=0). */
   int force_flag;	 /* remove existing destination files (default=0). */
+  int no_dereference_flag;	 /* treat LINK_NAME as a normal file if it is a symbolic link to a directory (default=0). */
   char * target_directory_arg;	 /* specify the DIRECTORY in which to create the links (default=NULL). */
   int no_target_directory_flag;	 /* treat LINK_NAME as a normal file always (default=0). */
 
@@ -34,6 +35,7 @@ struct gengetopt_args_info {
   int hard_given;	 /* Whether hard was given */
   int symbolic_given;	 /* Whether symbolic was given */
   int force_given;	 /* Whether force was given */
+  int no_dereference_given;	 /* Whether no-dereference was given */
   int target_directory_given;	 /* Whether target-directory was given */
   int no_target_directory_given;	 /* Whether no-target-directory was given */
   

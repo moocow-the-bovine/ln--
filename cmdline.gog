@@ -1,15 +1,16 @@
 #
 # Getopt::Gen specification for moot
 #-----------------------------------------------------------------------------
-program "ln++"
+program "ln--"
 #program_version "0.01"
 
 purpose	"Quick and dirty `smart' link creation simulating ln(1).
 
-  ln++ [OPTION]... [-T] TARGET LINK_NAME   (1st form)
-  ln++ [OPTION]... TARGET                  (2nd form)
-  ln++ [OPTION]... TARGET... DIRECTORY     (3rd form)
-  ln++ [OPTION]... -t DIRECTORY TARGET...  (4th form)
+Synopsis:
+  ln-- [OPTION]... [-T] TARGET LINK_NAME   (1st form)
+  ln-- [OPTION]... TARGET                  (2nd form)
+  ln-- [OPTION]... TARGET... DIRECTORY     (3rd form)
+  ln-- [OPTION]... -t DIRECTORY TARGET...  (4th form)
 
 In the 1st form, create a link to TARGET with the name LINK_NAME.
 In the 2nd form, create a link to TARGET in the current directory.
@@ -20,13 +21,6 @@ When creating hard links, each TARGET must exist.  Symbolic links
 can hold arbitrary text; if later resolved, a relative link is
 interpreted in relation to its parent directory."
 
-#"Synopsis:
-#  ln++ [OPTION]... [-T] TARGET LINK_NAME   (1st form)
-#  ln++ [OPTION]... TARGET                  (2nd form)
-#  ln++ [OPTION]... TARGET... DIRECTORY     (3rd form)
-#  ln++ [OPTION]... -t DIRECTORY TARGET...  (4th form)
-#"
-
 author  "Bryan Jurish <moocow@cpan.org>"
 on_reparse "warn"
 
@@ -34,7 +28,9 @@ on_reparse "warn"
 # Details
 #-----------------------------------------------------------------------------
 details "
-not yet written
+See ln(1).  The only thing this program does that ln itself doesn't is
+fall back to creating symlinks if hard-link creation fails.  Otherwise,
+you should almost certainly be using ln.
 "
 
 #-----------------------------------------------------------------------------
@@ -61,18 +57,19 @@ flag "symbolic" s "create only symlinks" \
      code='q{args_info->any_given=args_info->hard_given=0;}'
 
 
+# see glibc info for canonicalize_file_name(), also POSIX realpath()
 #flag "absolute" A "use absolute paths when creating links"
-
 
 
 #-----------------------------------------------------------------------------
 group "ln(1) Simulation Options"
 flag "force" f "remove existing destination files"
+flag "no-dereference" n "treat LINK_NAME as a normal file if it is a symbolic link to a directory"
 string "target-directory" t "specify the DIRECTORY in which to create the links" arg="DIR"
 flag "no-target-directory" T "treat LINK_NAME as a normal file always"
 
 #-----------------------------------------------------------------------------
-# not yet implemented:
+# not yet implemented, from ln(1) manpage:
  #    --backup CTRL    # make a backup of each existing destination file
  #-b                   # like --backup but does not accept an argument
  #-d, --directory      # allow the superuser to attempt to hard link directories (will probably fail)
@@ -94,7 +91,9 @@ flag "no-target-directory" T "treat LINK_NAME as a normal file always"
 #-----------------------------------------------------------------------------
 bugs "
 
-Probably many.
+Not all options to ln(1) are supported.
+
+Probably many more, too.
 
 "
 

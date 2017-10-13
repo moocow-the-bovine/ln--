@@ -6,15 +6,15 @@ SHELL ?= /bin/bash -o pipefail
 .DELETE_ON_ERROR:
 
 CC = gcc
-CFLAGS ?= -Wall -DHAVE_CONFIG_H
+CFLAGS ?= -Wall -DHAVE_CONFIG_H -O2
 LDFLAGS ?= $(CFLAGS)
 LIBS ?=
 
-CLEAN_FILES ?= ln++ *.o
+CLEAN_FILES ?= ln-- *.o
 
 ##======================================================================
 ## Rules: Top-Level
-all: ln++
+all: ln--
 
 ##--------------------------------------------------------------
 ## Rules: gog
@@ -22,12 +22,12 @@ cmdline.c cmdline.h: cmdline.gog
 	optgen.perl -u -l --nopod --no-handle-rcfile -F cmdline $<
 CLEAN_FILES += cmdline.c cmdline.h
 
-ln++.o: cmdline.c cmdline.h
+ln--.o: cmdline.c cmdline.h
 cmdline.o: cmdline.c cmdline.h
 %.o: %.c config.h
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-ln++: ln++.o cmdline.o
+ln--: ln--.o cmdline.o
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 ##======================================================================
