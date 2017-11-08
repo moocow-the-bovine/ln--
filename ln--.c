@@ -35,7 +35,11 @@ const char *prog;
 int is_symlink(const char *path)
 {
   struct stat path_lstat;
-  lstat(path, &path_lstat);
+  if (lstat(path,&path_lstat)==-1) {
+    if (errno==ENOENT) return 0;
+    fprintf(stderr, "%s: lstat() failed for path '%s': %s\n", prog, path, strerror(errno));
+    exit(errno);
+  }
   return S_ISLNK(path_lstat.st_mode);
 }
 
@@ -48,7 +52,11 @@ int is_directory(const char *path)
   else if (args.no_dereference_flag && is_symlink(path))
     return 0;
 
-  stat(path,&path_stat);
+  if (stat(path,&path_stat)==-1) {
+    if (errno==ENOENT) return 0;
+    fprintf(stderr, "%s: stat() failed for path '%s': %s\n", prog, path, strerror(errno));
+    exit(errno);
+  }
   return S_ISDIR(path_stat.st_mode);
 }
 
