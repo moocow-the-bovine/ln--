@@ -14,8 +14,17 @@ pipeline {
 	    }
 	    steps {
                 sh 'echo "Hello, jenkins"'
-		sh 'echo "Hello again and again"' 
             }
+	}
+
+	//-- "build": build the project
+	stage('build') {
+	    agent {
+		docker { image 'buildpack-deps:stretch' }
+	    }
+	    steps {
+		sh 'make'
+	    }
 	}
     }
 }
