@@ -13,7 +13,8 @@ pipeline {
 		docker { image 'debian:stretch' }
 	    }
 	    steps {
-                sh 'echo "Hello, jenkins"' 
+                sh 'echo "Hello, jenkins"'
+		sh 'echo "Hello again"' 
             }
 	}
     }
