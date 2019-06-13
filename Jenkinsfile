@@ -14,7 +14,7 @@ pipeline {
 	    }
 	    steps {
                 sh 'echo "Hello, jenkins"'
-		sh 'echo "Hello again"' 
+		sh 'echo "Hello again and again"' 
             }
 	}
     }
