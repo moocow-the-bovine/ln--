@@ -23,6 +23,8 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
+		sh 'pwd'
+		sh 'ls -aF'
 		sh 'make'
 	    }
 	}
