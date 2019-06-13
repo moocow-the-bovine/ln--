@@ -35,7 +35,7 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh './ln--/ln-- --help'
+		sh './ln--/ln-- --version'
 	    }
 	}
 
