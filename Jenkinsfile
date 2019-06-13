@@ -8,6 +8,7 @@ pipeline {
 
     stages {
 	//-- "hello": test 123
+	/*
 	stage('hello') {
 	    agent {
 		docker { image 'debian:stretch' }
@@ -16,6 +17,7 @@ pipeline {
                 sh 'echo "Hello, jenkins"'
             }
 	}
+	 */
 
 	//-- "build": build the project
 	stage('build') {
@@ -23,10 +25,19 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh 'pwd'
-		sh 'ls -aF'
-		sh 'make'
+		sh 'make -C ln--'
 	    }
 	}
+
+	//-- "test": test (dummy)
+	stage('test') {
+	    agent {
+		docker { image 'buildpack-deps:stretch' }
+	    }
+	    steps {
+		sh './ln--/ln-- --help'
+	    }
+	}
+
     }
 }
