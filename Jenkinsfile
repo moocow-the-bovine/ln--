@@ -33,10 +33,10 @@ pipeline {
 	//-- "test": test (dummy)
 	stage('test') {
 	    agent {
-		docker { image 'buildpack-deps:stretch' }
+		docker { image 'buildpack-deps:stretch-moo' }
 	    }
 	    steps {
-		sh 'apt-get update && apt-get -y install libtap-harness-archive-perl'
+		//sh 'apt-get update && apt-get -y install libtap-harness-archive-perl' //-- permission denied
 		sh 'mkdir tap_output'
 		sh 'make PROVE_OPTS="--archive tap_output" test'
 	    }
