@@ -33,7 +33,7 @@ pipeline {
 	//-- "test": test (dummy)
 	stage('test') {
 	    agent {
-		docker { image 'buildpack-deps:stretch-moo' }
+		docker { image 'buildpack-deps-moo:latest' }
 	    }
 	    steps {
 		//-- TAP formatting + jenkins TAP plugin
