@@ -36,9 +36,14 @@ pipeline {
 		docker { image 'buildpack-deps:stretch-moo' }
 	    }
 	    steps {
-		//sh 'apt-get update && apt-get -y install libtap-harness-archive-perl' //-- permission denied
-		sh 'make PROVE_OPTS="--archive tap_output" test'
-		step([$class: "TapPublisher", testResults: "tap_output/**/*.t"]) //-- "publish" tap results for buntiklicki jenkins "TAP" plugin
+		//-- TAP formatting + jenkins TAP plugin
+		///sh 'apt-get update && apt-get -y install libtap-harness-archive-perl' //-- permission denied
+		//sh 'make PROVE_OPTS="--archive tap_output" test'
+		//step([$class: "TapPublisher", testResults: "tap_output/**/*.t"]) //-- "publish" tap results for buntiklicki jenkins "TAP" plugin
+
+		//-- JUnit formatting
+		sh 'make PROVE_OPTS="--archive tap_output --formatter TAP::Formatter::JUnit" test'
+		junit 'tap_output/**/*.junit.xml'
 	    }
 	}
 
