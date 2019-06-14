@@ -1,6 +1,6 @@
 /*-*- Mode: Groovy; coding: utf-8; -*-*/
 pipeline {
-    agent any
+    agent none
     options {
 	//-- abort if any stage fails
         skipStagesAfterUnstable()
@@ -48,26 +48,26 @@ pipeline {
 	}
 
 	//-- "archive": archive built artifacts (--> "artifact introduced outside jenkins" is irritating)
-	/*
 	stage('archive') {
-	    agent any
+	    agent {
+		docker { image 'buildpack-deps-moo:latest' }
+	    }
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
 	    }
 	}
-	 */
     }
 
     post {
 	//-- see https://jenkins.io/doc/pipeline/tour/post/
+	/*
 	always {
 	    echo "Archiving artifacts for build ${env.BUILD_NUMBER}"
 	    archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
-	    /*
-            echo 'One way or another, I have finished'
-            deleteDir() //-- clean up our workspace
-	     */
+            //echo 'One way or another, I have finished'
+            //deleteDir() //-- clean up our workspace
 	}
+	*/
         success {
             echo 'Pipeline completed successfully :)'
 	    deleteDir() //-- clean up our workspace
