@@ -26,7 +26,7 @@ pipeline {
 	    }
 	    steps {
 		sh 'make'
-		sh 'echo foo; echo bar; sleep 30'
+		//sh 'echo foo; echo bar; sleep 30' //-- works
 	    }
 	}
 
