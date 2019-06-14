@@ -36,7 +36,8 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh 'make PROVE_OPTS=-v TEST_DIR=. test'
+		sh 'mkdir tap_output'
+		sh 'make PROVE_OPTS="-v --archive tap_output" test'
 	    }
 	}
 
