@@ -1,6 +1,6 @@
 /*-*- Mode: Groovy; coding: utf-8; -*-*/
 pipeline {
-    agent none
+    agent any
     options {
 	//-- abort if any stage fails
         skipStagesAfterUnstable()
