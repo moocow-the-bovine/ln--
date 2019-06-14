@@ -66,7 +66,7 @@ pipeline {
 	    echo "Archiving artifacts for build ${env.BUILD_NUMBER}"
 	    archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
             //echo 'One way or another, I have finished'
-            //deleteDir() //-- clean up our workspace
+            deleteDir() //-- clean up our workspace
 	}
         success {
             echo 'Pipeline completed successfully :)'
