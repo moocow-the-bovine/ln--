@@ -42,7 +42,7 @@ ln--: ln--.o cmdline.o
 PROVE_OPTS ?= -v
 test: ln--
 	./ln-- --version
-	prove $(PROVE_OPTS) t/*.t
+	prove $(PROVE_OPTS) t/
 
 ##======================================================================
 ## Rules: install
