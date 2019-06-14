@@ -36,7 +36,7 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh 'make PROVE_OPTS=-v test'
+		sh 'make PROVE_OPTS=-v TEST_DIR=. test'
 	    }
 	}
 
