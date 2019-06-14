@@ -37,7 +37,6 @@ pipeline {
 	    }
 	    steps {
 		//sh 'apt-get update && apt-get -y install libtap-harness-archive-perl' //-- permission denied
-		sh 'mkdir tap_output'
 		sh 'make PROVE_OPTS="--archive tap_output" test'
 	    }
 	}
