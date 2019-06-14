@@ -25,7 +25,8 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh 'make -C ln--'
+		sh 'make'
+		sh 'echo foo; echo bar; sleep 30'
 	    }
 	}
 
@@ -35,7 +36,7 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
-		sh './ln--/ln-- --version'
+		sh './ln-- --version'
 	    }
 	}
 
