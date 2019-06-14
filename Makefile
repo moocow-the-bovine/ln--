@@ -39,8 +39,12 @@ ln--: ln--.o cmdline.o
 ##======================================================================
 ## Rules: test (dummy)
 
+PROVE_OPTS ?= -v
+TEST_DIR   ?= .
+export TEST_DIR
 test: ln--
 	./ln-- --version
+	prove $(PROVE_OPTS) t/
 
 ##======================================================================
 ## Rules: install
