@@ -54,10 +54,24 @@ pipeline {
 	    }
 	}
     }
+
     post {
-        always {
-	    //-- always track test results
-            junit 'tap_output/**/*.junit.xml'
+	/*
+	always {
+            echo 'One way or another, I have finished'
+            deleteDir() //-- clean up our workspace
+        }*/
+        success {
+            echo 'Pipeline completed successfully :)'
+        }
+        unstable {
+            echo 'Pipeline unstable :/'
+        }
+        failure {
+            echo 'Pipeline FAILED :('
+        }
+        changed {
+            echo 'Piline status CHANGED :P'
         }
     }
 }
