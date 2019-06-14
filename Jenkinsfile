@@ -38,7 +38,7 @@ pipeline {
 	    steps {
 		//sh 'apt-get update && apt-get -y install libtap-harness-archive-perl' //-- permission denied
 		sh 'make PROVE_OPTS="--archive tap_output" test'
-		step([$class: "TapPublisher", testResults: "tap_output/**/*.t"])
+		step([$class: "TapPublisher", testResults: "tap_output/**/*.t"]) //-- "publish" tap results for buntiklicki jenkins "TAP" plugin
 	    }
 	}
 
