@@ -41,11 +41,23 @@ pipeline {
 		//sh 'make PROVE_OPTS="--archive tap_output" test'
 		//step([$class: "TapPublisher", testResults: "tap_output/**/*.t"]) //-- "publish" tap results for buntiklicki jenkins "TAP" plugin
 
-		//-- JUnit formatting
+		//-- JUnit formatting + jenkins JUnit plugin
 		sh 'make PROVE_OPTS="--archive tap_output --formatter TAP::Formatter::JUnit" test'
 		junit 'tap_output/**/*.junit.xml'
 	    }
 	}
 
+	//-- "archive": archive built artifacts
+	stage('archive') {
+	    steps {
+		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
+	    }
+	}
+    }
+    post {
+        always {
+	    //-- always track test results
+            junit 'tap_output/**/*.junit.xml'
+        }
     }
 }
