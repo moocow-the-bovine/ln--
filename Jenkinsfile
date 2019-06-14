@@ -48,7 +48,6 @@ pipeline {
 	}
 
 	//-- "archive": archive built artifacts (--> "artifact introduced outside jenkins" is irritating)
-	/*
 	stage('archive') {
 	    agent {
 		docker { image 'buildpack-deps-moo:latest' }
@@ -57,20 +56,21 @@ pipeline {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
 	    }
 	}
-	 */
     }
 
     post {
 	//-- see https://jenkins.io/doc/pipeline/tour/post/
+	/*
 	always {
 	    echo "Archiving artifacts for build ${env.BUILD_NUMBER}"
 	    archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
             //echo 'One way or another, I have finished'
             deleteDir() //-- clean up our workspace
 	}
+	*/
         success {
             echo 'Pipeline completed successfully :)'
-	    deleteDir() //-- clean up our workspace
+	    deleteDir()
         }
         unstable {
             echo 'Pipeline unstable :/'
