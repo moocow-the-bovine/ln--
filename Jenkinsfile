@@ -61,6 +61,7 @@ pipeline {
     post {
 	//-- see https://jenkins.io/doc/pipeline/tour/post/
 	always {
+	    echo 'Archiving artifacts for build ${env.BUILD_NUMBER}'
 	    archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
 	    /*
             echo 'One way or another, I have finished'
