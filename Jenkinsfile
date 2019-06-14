@@ -36,6 +36,7 @@ pipeline {
 		docker { image 'buildpack-deps:stretch' }
 	    }
 	    steps {
+		sh 'apt-get update && apt-get -y install libtap-harness-archive-perl'
 		sh 'mkdir tap_output'
 		sh 'make PROVE_OPTS="--archive tap_output" test'
 	    }
