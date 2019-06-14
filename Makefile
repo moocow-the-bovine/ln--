@@ -39,7 +39,7 @@ ln--: ln--.o cmdline.o
 ##======================================================================
 ## Rules: test (dummy)
 
-PROVE_OPTS ?= -v
+PROVE_OPTS ?=
 TEST_DIR   ?= .
 export TEST_DIR
 test: ln--
