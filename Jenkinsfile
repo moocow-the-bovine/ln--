@@ -49,6 +49,7 @@ pipeline {
 
 	//-- "archive": archive built artifacts
 	stage('archive') {
+	    agent any
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
 	    }
@@ -56,6 +57,7 @@ pipeline {
     }
 
     post {
+	//-- see https://jenkins.io/doc/pipeline/tour/post/
 	/*
 	always {
             echo 'One way or another, I have finished'
