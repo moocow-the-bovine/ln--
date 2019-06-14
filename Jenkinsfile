@@ -70,6 +70,7 @@ pipeline {
 	}
         success {
             echo 'Pipeline completed successfully :)'
+	    deleteDir() //-- clean up our workspace
         }
         unstable {
             echo 'Pipeline unstable :/'
