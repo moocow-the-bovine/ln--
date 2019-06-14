@@ -47,22 +47,26 @@ pipeline {
 	    }
 	}
 
-	//-- "archive": archive built artifacts
+	//-- "archive": archive built artifacts (--> "artifact introduced outside jenkins" is irritating)
+	/*
 	stage('archive') {
 	    agent any
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
 	    }
 	}
+	 */
     }
 
     post {
 	//-- see https://jenkins.io/doc/pipeline/tour/post/
-	/*
 	always {
-            echo 'One way or another, I have finished'
-            deleteDir() //-- clean up our workspace
-        }*/
+	    archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
+	    /*
+             echo 'One way or another, I have finished'
+             deleteDir() //-- clean up our workspace
+	     */
+	}
         success {
             echo 'Pipeline completed successfully :)'
         }
