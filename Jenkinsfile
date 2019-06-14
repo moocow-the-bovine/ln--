@@ -22,7 +22,7 @@ pipeline {
 	//-- "build": build the project
 	stage('build') {
 	    agent {
-		docker { image 'buildpack-deps:stretch' }
+		docker { image 'buildpack-deps-moo:latest' }
 	    }
 	    steps {
 		sh 'make'
@@ -80,7 +80,7 @@ pipeline {
             echo 'Pipeline FAILED :('
         }
         changed {
-            echo 'Piline status CHANGED :P'
+            echo 'Pipeline status CHANGED :P'
         }
     }
 }
