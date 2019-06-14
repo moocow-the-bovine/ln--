@@ -37,7 +37,7 @@ pipeline {
 	    }
 	    steps {
 		sh 'mkdir tap_output'
-		sh 'make PROVE_OPTS="-v --archive tap_output" test'
+		sh 'make PROVE_OPTS="--archive tap_output" test'
 	    }
 	}
 
