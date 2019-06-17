@@ -74,7 +74,7 @@ pipeline {
 	*/
         success {
             echo 'Pipeline completed successfully :)'
-	    deleteDir()
+	    //deleteDir()
         }
         unstable {
             echo 'Pipeline unstable :/'
