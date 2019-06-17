@@ -52,7 +52,8 @@ pipeline {
 	//-- "archive": archive built artifacts (--> "artifact introduced outside jenkins" is irritating)
 	stage('archive') {
 	    agent {
-		docker { image 'buildpack-deps-moo:latest' }
+		//docker { image 'buildpack-deps-moo:latest' }
+		label 'kira'
 	    }
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
