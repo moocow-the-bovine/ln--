@@ -22,7 +22,8 @@ pipeline {
 	//-- "build": build the project
 	stage('build') {
 	    agent {
-		docker { image 'buildpack-deps-moo:latest' }
+		//docker { image 'buildpack-deps-moo:latest' }
+		label 'kira'
 	    }
 	    steps {
 		sh 'make'
@@ -34,6 +35,7 @@ pipeline {
 	stage('test') {
 	    agent {
 		docker { image 'buildpack-deps-moo:latest' }
+		//label 'kira'
 	    }
 	    steps {
 		//-- TAP formatting + jenkins TAP plugin
