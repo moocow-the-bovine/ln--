@@ -57,7 +57,7 @@ pipeline {
 	    }
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
-		sh 'make clean'
+		//sh 'make clean'
 	    }
 	}
     }
