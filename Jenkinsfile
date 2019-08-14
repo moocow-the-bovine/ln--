@@ -22,8 +22,8 @@ pipeline {
 	//-- "build": build the project
 	stage('build') {
 	    agent {
-		//docker { image 'buildpack-deps-moo:latest' }
-		label 'kira'
+		docker { image 'buildpack-deps-moo:latest' }
+		//label 'kira'
 	    }
 	    steps {
 		sh 'make'
@@ -34,8 +34,8 @@ pipeline {
 	//-- "test": test (dummy)
 	stage('test') {
 	    agent {
-		//docker { image 'buildpack-deps-moo:latest' }
-		label 'kira'
+		docker { image 'buildpack-deps-moo:latest' }
+		//label 'kira'
 	    }
 	    steps {
 		//-- TAP formatting + jenkins TAP plugin
@@ -52,8 +52,8 @@ pipeline {
 	//-- "archive": archive built artifacts (--> "artifact introduced outside jenkins" is irritating)
 	stage('archive') {
 	    agent {
-		//docker { image 'buildpack-deps-moo:latest' }
-		label 'kira'
+		docker { image 'buildpack-deps-moo:latest' }
+		//label 'kira'
 	    }
 	    steps {
 		archiveArtifacts artifacts: 'ln--', onlyIfSuccessful:true, fingerprint:true
