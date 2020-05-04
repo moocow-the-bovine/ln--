@@ -1,4 +1,5 @@
 ##-*- Mode: GNUmakefile; coding: utf-8; -*-
+## dummy comment: test jenkins SCM polling
 
 ##======================================================================
 ## Globals
