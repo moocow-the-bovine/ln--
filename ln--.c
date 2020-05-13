@@ -80,7 +80,11 @@ void link_generic(const char *src, const char *dst)
     fprintf(stderr, "LINK %s: `%s' -> `%s'\n", ln_mode_str, dst, src);
 
   //-- try to force-remove pre-existing dst if requested
-  if (args.force_flag && access(dst,F_OK) == 0) {
+  if (args.force_flag) {
+    if (access(dst,F_OK) != 0) {
+      fprintf(stderr, "%s: refusing to remove existing file `%s': access denied\n", prog, dst);
+      exit(255);
+    }
     if (strcmp(src,dst)==0) {
       fprintf(stderr, "%s: refusing to remove existing file `%s': source and target paths are identical\n", prog, src);
       exit(255);
