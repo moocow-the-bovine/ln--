@@ -82,7 +82,7 @@ void link_generic(const char *src, const char *dst)
   //-- try to force-remove pre-existing dst if requested
   if (args.force_flag) {
     if (access(dst,F_OK) != 0) {
-      fprintf(stderr, "%s: refusing to remove existing file `%s': access denied\n", prog, dst);
+      fprintf(stderr, "%s: access denied for existing file `%s': %s\n", prog, dst, strerror(errno));
       exit(255);
     }
     if (strcmp(src,dst)==0) {
