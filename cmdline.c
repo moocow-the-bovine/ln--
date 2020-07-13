@@ -63,7 +63,7 @@
 void
 cmdline_parser_print_version (void)
 {
-  printf("ln-- (%s %s) by Bryan Jurish <moocow@cpan.org>\n", PACKAGE, VERSION);
+  printf("ln-- 0.02 (%s %s) by Bryan Jurish <moocow@cpan.org>\n", PACKAGE, VERSION);
 }
 
 void

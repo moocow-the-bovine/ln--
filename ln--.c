@@ -1,4 +1,7 @@
 /*-*- Mode: C -*-*/
+/*
+ *
+ */
 
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -60,6 +63,13 @@ int is_directory(const char *path)
   return S_ISDIR(path_stat.st_mode);
 }
 
+int file_or_link_exists(const char *path)
+{
+  struct stat statbuf;
+  return (lstat (path, &statbuf) == 0);
+}
+
+
 
 int link_hard(const char *src, const char *dst)
 { return link(src,dst); }
@@ -80,7 +90,7 @@ void link_generic(const char *src, const char *dst)
     fprintf(stderr, "LINK %s: `%s' -> `%s'\n", ln_mode_str, dst, src);
 
   //-- try to force-remove pre-existing dst if requested
-  if (args.force_flag) {
+  if (args.force_flag && file_or_link_exists(dst)) {
     /*-- 2020-05-13: this actually checks access to *destination* file, fails for dangling symlinks
     if (access(dst,F_OK) != 0) {
       fprintf(stderr, "%s: access denied for existing file `%s': %s\n", prog, dst, strerror(errno));
