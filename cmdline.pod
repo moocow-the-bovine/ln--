@@ -8,7 +8,6 @@
 ln-- - Quick and dirty `smart' link creation simulating ln(1).
 
 Synopsis:
-
   ln-- [OPTION]... [-T] TARGET LINK_NAME   (1st form)
   ln-- [OPTION]... TARGET                  (2nd form)
   ln-- [OPTION]... TARGET... DIRECTORY     (3rd form)
@@ -269,7 +268,7 @@ using Getopt::Gen version 0.15.
 Translation was initiated
 as:
 
-   optgen.perl -u -l --no-handle-rcfile -F cmdline cmdline.gog
+   optgen.perl -u -l --no-handle-rcfile --nohfile --nocfile -F ln-- cmdline.gog
 
 =cut
 
