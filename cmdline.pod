@@ -8,6 +8,7 @@
 ln-- - Quick and dirty `smart' link creation simulating ln(1).
 
 Synopsis:
+
   ln-- [OPTION]... [-T] TARGET LINK_NAME   (1st form)
   ln-- [OPTION]... TARGET                  (2nd form)
   ln-- [OPTION]... TARGET... DIRECTORY     (3rd form)
